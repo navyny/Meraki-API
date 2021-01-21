@@ -1,0 +1,54 @@
+
+#1-Use this link to obtain org-ID:  https://n361.meraki.com/api/v0/organizations
+
+#2-Generate An API Key from Dashboard
+
+#3-Do a GET request...response is a string
+
+#4-Convert Strings to a list of Dictionaries (using Loads)
+
+#5-Extract "Network-Names from the Dictioanry"
+
+import requests
+import json
+import pprint
+#pp = pprint.PrettyPrinter(indent=4)
+#pp.pprint(dict)
+
+headers = {
+    'X-Cisco-Meraki-API-Key': '1841ad87f5b9102869f4ceef59dd55e0efce4832',
+    'Content-Type': 'application/json',
+}
+
+r = requests.get('https://api.meraki.com/api/v1/organizations/271535/networks', headers=headers)
+
+
+
+print(type(r))   #<class 'requests.models.Response'>
+
+print(r.status_code)
+
+
+
+print(type((r.text)))
+
+mylist = json.loads(r.text)
+
+
+
+"""
+for each_dict in mylist:
+    print(each_dict['name'])
+"""
+
+newlist=[]
+
+for each_dict in mylist:
+    newlist.append(each_dict['name'])
+    
+print(*newlist, sep='\n')        #sep='\n'   
+
+
+
+#curl -L -H 'X-Cisco-Meraki-API-Key:1841ad87f5b9102869f4ceef59dd55e0efce48' -H 'Content-Type: application/json' -X GET 'https://api.meraki.com/api/v1/organizations/27****'
+
